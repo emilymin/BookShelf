@@ -6,6 +6,9 @@ gradlew
 gradlew.bat
 settings.gradle
 README.md
+.DS_Store
 
+out
 build
 gradle
+.gradle
