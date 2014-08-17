@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <title>BOOK SHELF</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="bookShelfApp.js"></script>
+    <script src="Book.js"></script>
+    <script src="bookCtrl.js"></script>
+    <script src="bookListCtrl.js"></script>
+    <link rel="stylesheet" type="text/css" href="myIndex.css">
+</head>
+<body ng-app="bookShelfApp">
+<div class="header"></div>
+<div class="main" ng-controller="bookCtrl">
+    <h1>Book Shelf</h1>
+    <input ng-model="bookName" placeholder="enter book name"></br>
+    <input ng-model="bookAuthor" placeholder="enter book author"></br>
+    <button ng-click="addBook()">ADD</button>
+</div>
+<div class="show" ng-controller="bookListCtrl">
+    <ul>
+        <li ng-repeat="book in bookShelf">
+            name:{{book.name}}</br>
+            author:{{book.author}}</br>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

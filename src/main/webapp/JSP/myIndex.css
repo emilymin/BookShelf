@@ -1,0 +1,25 @@
+div {
+    display: inline-block;
+    margin:0px;
+}
+
+div.header{
+    height: 50px;
+    width: 100%;
+    background-color:silver;
+}
+
+div.main{
+    height: 200px;
+    width: 100%;
+    background-color:#E2BE22
+}
+
+div.show{
+    height: 200px;
+    width: 100%;
+    background-color:red
+}
+
+
+

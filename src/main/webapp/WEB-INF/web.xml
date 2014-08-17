@@ -15,4 +15,35 @@
         <servlet-name>mvc-dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MyHello</servlet-name>
+        <servlet-class>com.thoughtworks.controller.HelloServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyHello</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookShelf</servlet-name>
+        <servlet-class>com.thoughtworks.controller.BookShelfServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BookShelf</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowBook</servlet-name>
+        <servlet-class>com.thoughtworks.controller.ShowBookServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShowBook</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
 </web-app>
