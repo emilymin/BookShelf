@@ -11,9 +11,4 @@ public class HelloServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<h1>" +  "Hello" + "</h1>");
     }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter out = response.getWriter();
-        out.println("<h1>" +  "Hello" + "</h1>");
-    }
 }

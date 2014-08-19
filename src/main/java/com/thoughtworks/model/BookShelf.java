@@ -31,6 +31,7 @@ public class BookShelf {
         for (Book book : bookList) {
             if (book.getISBN().equals(isbn))
                 bookList.remove(book);
+            System.out.println("hello");
         }
     }
 }
