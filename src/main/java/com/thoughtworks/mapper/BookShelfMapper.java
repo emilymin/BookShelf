@@ -1,7 +1,7 @@
 package com.thoughtworks.mapper;
 
-import com.thoughtworks.model.Book;
-import com.thoughtworks.model.PhysicalBook;
+import com.thoughtworks.domain.Book;
+import com.thoughtworks.domain.PhysicalBook;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;

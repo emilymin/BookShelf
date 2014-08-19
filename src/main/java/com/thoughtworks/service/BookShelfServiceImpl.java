@@ -1,14 +1,14 @@
 package com.thoughtworks.service;
 
 import com.thoughtworks.mapper.BookShelfMapper;
-import com.thoughtworks.model.Book;
-import com.thoughtworks.model.PhysicalBook;
+import com.thoughtworks.domain.Book;
+import com.thoughtworks.domain.PhysicalBook;
 
 import java.util.List;
 
 public class BookShelfServiceImpl implements BookShelfService {
 
-    public PhysicalBook getPhysicalBookByISBN(String s) {
+    public PhysicalBook getBookByISBN(String s) {
         PhysicalBook book = null;
         BookShelfMapper bookShelfMapper = new BookShelfMapper();
         try {
@@ -22,7 +22,7 @@ public class BookShelfServiceImpl implements BookShelfService {
         }
     }
 
-    public List<Book> getPhysicalBookList() {
+    public List<Book> getBookList() {
         BookShelfMapper bookShelfMapper = new BookShelfMapper();
         return bookShelfMapper.getBookList();
     }
@@ -32,12 +32,12 @@ public class BookShelfServiceImpl implements BookShelfService {
         bookShelfMapper.addPhysicalBook(book);
     }
 
-    public void deletePhysicalBookByISBN(String s) {
+    public void deleteBookByISBN(String s) {
         BookShelfMapper bookShelfMapper = new BookShelfMapper();
         bookShelfMapper.deletePhysicalBookByISBN(s);
     }
 
-    public void deleteAllPhysicalBooks() {
+    public void deleteAllBooks() {
         BookShelfMapper bookShelfMapper = new BookShelfMapper();
         bookShelfMapper.deletePhysicalBooks();
     }

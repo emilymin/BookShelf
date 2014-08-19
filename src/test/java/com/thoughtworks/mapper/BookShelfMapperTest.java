@@ -1,8 +1,7 @@
 package com.thoughtworks.mapper;
 
-import com.thoughtworks.model.Book;
-import com.thoughtworks.model.BookShelf;
-import com.thoughtworks.model.PhysicalBook;
+import com.thoughtworks.domain.Book;
+import com.thoughtworks.domain.PhysicalBook;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
