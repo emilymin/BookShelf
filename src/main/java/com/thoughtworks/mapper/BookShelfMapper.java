@@ -4,20 +4,14 @@ import com.thoughtworks.domain.Book;
 import com.thoughtworks.domain.BookStatus;
 import com.thoughtworks.domain.ElectronicBook;
 import com.thoughtworks.domain.PhysicalBook;
+import com.thoughtworks.exception.DataAccessException;
+import com.thoughtworks.utils.DBUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BookShelfMapper {
-    private final static String DB_DRIVER = "com.mysql.jdbc.Driver";
-
-    private final static String DB_URL = "jdbc:mysql://localhost:3306/BOOKS";
-    private final static String DB_NAME = "root";
-    private final static String DB_PWd = "";
 
     private JdbcTemplate jdbcTemplate;
     static final String QUERYBOOK_SQL = "SELECT * FROM BOOKS WHERE ISBN =";
@@ -26,50 +20,42 @@ public class BookShelfMapper {
     static final String INSERTBOOK_SQL = "INSERT INTO BOOKS (ISBN, NAME, AUTHOR, LOCATION, TYPE) VALUES(?, ?, ?, ?, ?)";
     static final String UPDATESTATUS_SQL = "UPDATE BOOKS" + "SET STATUS = ? WHERE ISBN = ?";
 
-    static {
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static Connection getConnection() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(DB_URL, DB_NAME, DB_PWd);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
-
-    public int addBook(Book book) {
-        return jdbcTemplate.update(INSERTBOOK_SQL, book.getISBN(), book.getName(), book.getAuthors(), book.getLocation(), book.getType());
+    public int addBook(Book book) throws SQLException {
+        return DBUtil.update(INSERTBOOK_SQL, book.getISBN(), book.getName(), book.getAuthors(), book.getLocation(), book.getType());
     }
 
     public Book getBookByISBN(String isbn) {
         return jdbcTemplate.queryForObject(QUERYBOOK_SQL + isbn, Book.class);
     }
 
-    public List<Book> getBookList() {
-        return jdbcTemplate.query(QUERYBOOKS_SQL,new LoadRowMapper());
+    public List<Book> getBookList() throws DataAccessException, SQLException {
+        List<Book> bookList = new ArrayList<Book>();
+        bookList.addAll(getEBookBookList());
+        bookList.addAll(getPhysicalBookBookList());
+        return bookList;
     }
 
-    public List<ElectronicBook> getEBookBookList() {
-        return jdbcTemplate.query(QUERYEBOOKS_SQL + "ELECTRONIC",new LoadEleRowMapper());
+    public List<ElectronicBook> getEBookBookList() throws DataAccessException, SQLException {
+        String sql = "ELECTRONIC";
+        return DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadEleRowMapper());
     }
 
-    public Book borrowBook(String isbn){
+    public List<PhysicalBook> getPhysicalBookBookList() throws DataAccessException, SQLException {
+        String sql = "PHYSICAL";
+        return DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadPhyRowMapper());
+    }
+
+    public Book borrowBook(String isbn) throws SQLException {
         Book book = getBookByISBN(isbn);
         if (book.equals(PhysicalBook.class)){
             ((PhysicalBook)book).setStatus(BookStatus.BORROWED);
-            jdbcTemplate.update(UPDATESTATUS_SQL, BookStatus.BORROWED, book.getISBN());
+            DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED), book.getISBN());
         }
         return book;
     }
 
-    public List<Book> getBookByName(String name) {
+    public List<Book> getBookByName(String name) throws DataAccessException, SQLException {
         List<Book> validBooks = new ArrayList<Book>();
         List<ElectronicBook> electronicBooks = new ArrayList<ElectronicBook>();
         List<PhysicalBook> physicalBooks = new ArrayList<PhysicalBook>();
@@ -84,6 +70,8 @@ public class BookShelfMapper {
                 }
             }
         }
+        Collections.sort(electronicBooks);
+        Collections.sort(physicalBooks);
         validBooks.addAll(electronicBooks);
         validBooks.addAll(physicalBooks);
         return validBooks;

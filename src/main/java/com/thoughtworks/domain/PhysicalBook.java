@@ -2,7 +2,7 @@ package com.thoughtworks.domain;
 
 import java.math.BigDecimal;
 
-public class PhysicalBook extends Book {
+public class PhysicalBook extends Book implements Comparable<PhysicalBook>{
     private BookStatus status;
 
     @Override
@@ -44,5 +44,9 @@ public class PhysicalBook extends Book {
         int result = super.hashCode();
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    public int compareTo(PhysicalBook o) {
+        return this.getISBN().compareTo(o.getISBN());
     }
 }

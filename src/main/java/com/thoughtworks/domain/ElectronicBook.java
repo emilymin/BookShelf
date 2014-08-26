@@ -2,7 +2,7 @@ package com.thoughtworks.domain;
 
 import java.math.BigDecimal;
 
-public class ElectronicBook extends Book implements Comparable{
+public class ElectronicBook extends Book implements Comparable<ElectronicBook>{
     private String location;
     private BookStatus status;
 
@@ -52,8 +52,7 @@ public class ElectronicBook extends Book implements Comparable{
         return result;
     }
 
-
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(ElectronicBook o) {
+       return this.getISBN().compareTo(o.getISBN());
     }
 }

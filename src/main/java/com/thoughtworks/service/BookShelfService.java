@@ -3,6 +3,7 @@ package com.thoughtworks.service;
 import com.thoughtworks.domain.Book;
 import com.thoughtworks.exception.BookNotFoundException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public interface BookShelfService {
 //      param book
 //      return
 //
-    public boolean addBook(Book book) throws BookNotFoundException;
+    public boolean addBook(Book book) throws BookNotFoundException, SQLException;
 
 //
 //      返回所有电子书的名称和书的Map

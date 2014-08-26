@@ -2,12 +2,11 @@ package com.thoughtworks.mapper;
 
 
 import com.thoughtworks.domain.ElectronicBook;
-import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoadEleRowMapper implements RowMapper<ElectronicBook> {
+public class LoadEleRowMapper implements com.thoughtworks.mapper.RowMapper<ElectronicBook> {
 
     public ElectronicBook mapRow(ResultSet rs, int rowNum) throws SQLException {
 

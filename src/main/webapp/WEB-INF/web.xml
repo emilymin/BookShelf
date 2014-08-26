@@ -10,6 +10,10 @@
         <servlet-class>com.thoughtworks.controller.HelloServlet</servlet-class>
     </servlet>
 
+    <listener>
+        <class>com.thoughtworks.controller.BookShelfContextListener</class>
+    </listener>
+
     <servlet-mapping>
         <servlet-name>MyHello</servlet-name>
         <url-pattern>/hello</url-pattern>

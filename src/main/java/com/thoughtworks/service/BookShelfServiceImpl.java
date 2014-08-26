@@ -5,9 +5,8 @@ import com.thoughtworks.domain.ElectronicBook;
 import com.thoughtworks.exception.BookNotFoundException;
 import com.thoughtworks.mapper.BookShelfMapper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.*;
 
 public class BookShelfServiceImpl implements BookShelfService {
 
@@ -23,7 +22,7 @@ public class BookShelfServiceImpl implements BookShelfService {
         return null;
     }
 
-    public boolean addBook(Book book) throws BookNotFoundException {
+    public boolean addBook(Book book) throws BookNotFoundException, SQLException {
         BookShelfMapper mapper = new BookShelfMapper();
         if (book.getISBN() == null && book.getType() == null){
             return false;
@@ -35,6 +34,12 @@ public class BookShelfServiceImpl implements BookShelfService {
     public Map<String, Book> queryAllEBookNames() {
         BookShelfMapper mapper = new BookShelfMapper();
         List<ElectronicBook>  books = mapper.getEBookBookList();
+
+//        Collections.sort(books, new Comparator<ElectronicBook>() {
+//            public int compare(ElectronicBook book1, ElectronicBook book2) {
+//                return book1.getName();
+//            }
+//        });
         Map<String, Book> bookMap = new HashMap<String, Book>();
         for (Book book : books){
             bookMap.put(book.getName(), book);
