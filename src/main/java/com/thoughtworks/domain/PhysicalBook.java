@@ -1,10 +1,9 @@
 package com.thoughtworks.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class PhysicalBook extends Book {
-    private BookStatus bookStatus;
+    private BookStatus status;
 
     @Override
     public String getLocation() {
@@ -14,16 +13,17 @@ public class PhysicalBook extends Book {
     public PhysicalBook(){
     }
 
-    public PhysicalBook(String ISBN, String name, BigDecimal price, List<String> authors) {
-        super(ISBN, name, price, authors);
+    public PhysicalBook(String ISBN, String name, BigDecimal price, String authors, String type) {
+        super(ISBN, name, price, authors, type);
     }
 
-    public BookStatus getBookStatus() {
-        return bookStatus;
+    @Override
+    public void setStatus(BookStatus status) {
+        this.status = status;
     }
 
-    public void setBookStatus(BookStatus bookStatus) {
-        this.bookStatus = bookStatus;
+    public BookStatus getStatus() {
+        return status;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PhysicalBook extends Book {
 
         PhysicalBook that = (PhysicalBook) o;
 
-        if (bookStatus != that.bookStatus) return false;
+        if (status != that.status) return false;
 
         return true;
     }
@@ -42,7 +42,7 @@ public class PhysicalBook extends Book {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (bookStatus != null ? bookStatus.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 }

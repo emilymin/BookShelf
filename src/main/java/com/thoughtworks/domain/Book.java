@@ -1,25 +1,33 @@
 package com.thoughtworks.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public abstract class Book {
     private String ISBN;
     private String name;
     private BigDecimal price;
-    private List<String> authors;
+    private String authors;
+    private String type;
+    private BookStatus status;
 
     public abstract String getLocation();
 
     protected Book() {
     }
 
-    public Book(String ISBN, String name, BigDecimal price, List<String> authors) {
+    public Book(String ISBN, String name, BigDecimal price, String authors, String type) {
         this.ISBN = ISBN;
         this.name = name;
         this.price = price;
         this.authors = authors;
+        this.type = type;
     }
+
+    public BookStatus getStatus(BookStatus bookStatus) {
+        return status;
+    }
+
+    public abstract void setStatus(BookStatus status);
 
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
@@ -33,8 +41,16 @@ public abstract class Book {
         this.price = price;
     }
 
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(String authors) {
         this.authors = authors;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getISBN() {
@@ -49,7 +65,7 @@ public abstract class Book {
         return price;
     }
 
-    public List<String> getAuthors() {
+    public String getAuthors() {
         return authors;
     }
 
@@ -64,6 +80,7 @@ public abstract class Book {
         if (authors != null ? !authors.equals(book.authors) : book.authors != null) return false;
         if (name != null ? !name.equals(book.name) : book.name != null) return false;
         if (price != null ? !price.equals(book.price) : book.price != null) return false;
+        if (type != null ? !type.equals(book.type) : book.type != null) return false;
 
         return true;
     }
@@ -74,6 +91,7 @@ public abstract class Book {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
 }

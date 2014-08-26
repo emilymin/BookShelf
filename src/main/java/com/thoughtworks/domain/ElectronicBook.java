@@ -1,21 +1,30 @@
 package com.thoughtworks.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-public class ElectronicBook extends Book {
+public class ElectronicBook extends Book implements Comparable{
     private String location;
+    private BookStatus status;
 
     public ElectronicBook() {
     }
 
-    public ElectronicBook(String ISBN, String name, BigDecimal price, List<String> authors, String location) {
-        super(ISBN, name, price, authors);
+    public ElectronicBook(String ISBN, String name, BigDecimal price, String authors, String location, String type) {
+        super(ISBN, name, price, authors, type);
         this.location = location;
+        setStatus(BookStatus.BORROWABLE);
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus bookStatus) {
+        this.status = BookStatus.BORROWABLE;
     }
 
     @Override
@@ -41,5 +50,10 @@ public class ElectronicBook extends Book {
         int result = super.hashCode();
         result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
+    }
+
+
+    public int compareTo(Object o) {
+        return 0;
     }
 }

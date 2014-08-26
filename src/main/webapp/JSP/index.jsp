@@ -9,9 +9,12 @@
             <div class="middle"></div>
             <div class="middle">
                 <h1>BOOK SHELF</h1>
-                <form action = "ShowBook">
-                    <font>name  </font><input type = "text" id = "name" /> </br>
-                    <font>author</font><input type = "text" id = "author" /> </br></br>
+                <form action = "BookShelf" method="post">
+                    <font>isbn</font><input type = "text" id = "isbn" name = "isbn" /> </br>
+                    <font>name</font><input type = "text" id = "name" name="name"/></br>
+                    <font>author</font><input type = "text" id = "author" name="author"/></br>
+                    <font>location</font><input type = "text" id = "location" name="location"/></br>
+                    <font>type</font><input type = "text" id = "type" name="type"/></br></br>
                     <input type="submit" id="submit" />
                     <input type="button" id="cancel" value="cancel"/>
                 </form>

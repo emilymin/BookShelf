@@ -1,44 +1,50 @@
 package com.thoughtworks.service;
 
-import com.thoughtworks.mapper.BookShelfMapper;
 import com.thoughtworks.domain.Book;
-import com.thoughtworks.domain.PhysicalBook;
+import com.thoughtworks.domain.ElectronicBook;
+import com.thoughtworks.exception.BookNotFoundException;
+import com.thoughtworks.mapper.BookShelfMapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookShelfServiceImpl implements BookShelfService {
 
-    public PhysicalBook getBookByISBN(String s) {
-        PhysicalBook book = null;
-        BookShelfMapper bookShelfMapper = new BookShelfMapper();
-        try {
-             book = bookShelfMapper.getPhysicalBookByISBN(s);
+    public Book borrowBook(String bookIsbn) throws BookNotFoundException {
+        BookShelfMapper mapper = new BookShelfMapper();
+        Book book = mapper.borrowBook(bookIsbn);
+        if (book.equals(null))
+            throw new BookNotFoundException();
+        return book;
+    }
+
+    public List<Book> queryBookByName(String bookName) {
+        return null;
+    }
+
+    public boolean addBook(Book book) throws BookNotFoundException {
+        BookShelfMapper mapper = new BookShelfMapper();
+        if (book.getISBN() == null && book.getType() == null){
+            return false;
         }
-        catch (Exception e){
-            System.out.println("no physical book for this ISBN");
+        mapper.addBook(book);
+        return true;
+    }
+
+    public Map<String, Book> queryAllEBookNames() {
+        BookShelfMapper mapper = new BookShelfMapper();
+        List<ElectronicBook>  books = mapper.getEBookBookList();
+        Map<String, Book> bookMap = new HashMap<String, Book>();
+        for (Book book : books){
+            bookMap.put(book.getName(), book);
         }
-        finally {
-            return book;
-        }
+        return bookMap;
     }
 
-    public List<Book> getBookList() {
-        BookShelfMapper bookShelfMapper = new BookShelfMapper();
-        return bookShelfMapper.getBookList();
-    }
-
-    public void addPhysicalBook(PhysicalBook book) {
-        BookShelfMapper bookShelfMapper = new BookShelfMapper();
-        bookShelfMapper.addPhysicalBook(book);
-    }
-
-    public void deleteBookByISBN(String s) {
-        BookShelfMapper bookShelfMapper = new BookShelfMapper();
-        bookShelfMapper.deletePhysicalBookByISBN(s);
-    }
-
-    public void deleteAllBooks() {
-        BookShelfMapper bookShelfMapper = new BookShelfMapper();
-        bookShelfMapper.deletePhysicalBooks();
+    public int bookAmount() {
+        BookShelfMapper mapper = new BookShelfMapper();
+        List<Book> bookList = mapper.getBookList();
+        return bookList.size();
     }
 }
