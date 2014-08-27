@@ -10,8 +10,7 @@ import java.util.List;
 public class DBUtil{
 
     private static String DB_DRIVER = "com.mysql.jdbc.Driver";
-
-    private static String DB_URL = "jdbc:mysql://localhost:3306/BOOKS?autoReconnect=true";
+    private static String DB_URL = "jdbc:mysql://localhost:3306/BOOKSHELF?autoReconnect=true";
     private static String DB_NAME = "root";
     private static String DB_PWd = "";
 
@@ -93,18 +92,18 @@ public class DBUtil{
         }
     }
 
-    public static int update(String sql, Object... args) throws SQLException {
-        PreparedStatement statement = getPreparedStatement(getConnection(),sql + args);
-        return statement.executeUpdate(sql + args);
-        
+    public static int update(String sql, List<String> parameterList) throws SQLException {
+        System.out.println("enter update");
+        String mySql = generateSQL(sql, parameterList);
+        System.out.println(mySql);
+        Statement statement = getPreparedStatement(getConnection(),mySql);
+        return statement.executeUpdate(mySql);
     }
 
     public static <T> List<T> query(String sql, List<String> list, RowMapper<T> rowMapper) throws DataAccessException, SQLException {
         PreparedStatement statement = getPreparedStatement(getConnection(), sql);
-        for (String s : list){
-            sql.replaceFirst("[?]", s);
-        }
-        ResultSet result = statement.executeQuery(sql);
+        String mySql = generateSQL(sql, list);
+        ResultSet result = statement.executeQuery(mySql);
         int rowNum = 0;
         List<T> bookList = new ArrayList<T>();
         if (result != null) {
@@ -113,5 +112,13 @@ public class DBUtil{
             }
         }
         return bookList;
+    }
+
+    public static String generateSQL(String sql, List<String> parameterList){
+        System.out.println("enter generateSQL");
+        for (String s : parameterList){
+            sql = sql.replaceFirst("\\?", s);
+        }
+        return sql;
     }
 }

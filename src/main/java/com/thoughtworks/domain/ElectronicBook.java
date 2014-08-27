@@ -29,7 +29,7 @@ public class ElectronicBook extends Book implements Comparable<ElectronicBook>{
 
     @Override
     public String getLocation() {
-        return "Electronic Book Location";
+        return this.location;
     }
 
     @Override

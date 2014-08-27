@@ -95,5 +95,3 @@ public abstract class Book {
         return result;
     }
 }
-
-

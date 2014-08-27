@@ -16,13 +16,14 @@ public class BookShelfMapper {
     private JdbcTemplate jdbcTemplate;
     static final String QUERYBOOK_SQL = "SELECT * FROM BOOKS WHERE ISBN =";
     static final String QUERYBOOKS_SQL = "SELECT * FROM BOOKS";
-    static final String QUERYEBOOKS_SQL = "SELECT * FROM BOOKS WHERE TYPE = ";
-    static final String INSERTBOOK_SQL = "INSERT INTO BOOKS (ISBN, NAME, AUTHOR, LOCATION, TYPE) VALUES(?, ?, ?, ?, ?)";
+    static final String QUERYEBOOKS_SQL = "SELECT * FROM BOOKS WHERE TYPE = \"?\"";
+    static final String INSERTBOOK_SQL = "INSERT INTO BOOKS (ISBN, NAME, AUTHOR, LOCATION, TYPE) VALUES(\"?\", \"?\", \"?\", \"?\", \"?\")";
     static final String UPDATESTATUS_SQL = "UPDATE BOOKS" + "SET STATUS = ? WHERE ISBN = ?";
 
 
     public int addBook(Book book) throws SQLException {
-        return DBUtil.update(INSERTBOOK_SQL, book.getISBN(), book.getName(), book.getAuthors(), book.getLocation(), book.getType());
+        System.out.println("enter addBook");
+        return DBUtil.update(INSERTBOOK_SQL, Arrays.asList(book.getISBN(), book.getName(), book.getAuthors(), book.getLocation(), book.getType()));
     }
 
     public Book getBookByISBN(String isbn) {
@@ -50,7 +51,7 @@ public class BookShelfMapper {
         Book book = getBookByISBN(isbn);
         if (book.equals(PhysicalBook.class)){
             ((PhysicalBook)book).setStatus(BookStatus.BORROWED);
-            DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED), book.getISBN());
+            DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED.toString(), book.getISBN()));
         }
 
         return book;

@@ -28,6 +28,12 @@ public class BookShelfServiceImpl implements BookShelfService {
         if (book.getISBN() == null && book.getType() == null){
             return false;
         }
+        System.out.println(book.getISBN());
+        System.out.println(book.getName());
+        System.out.println(book.getAuthors());
+        System.out.println(book.getLocation());
+        System.out.println(book.getType());
+
         mapper.addBook(book);
         return true;
     }
@@ -36,11 +42,6 @@ public class BookShelfServiceImpl implements BookShelfService {
         BookShelfMapper mapper = new BookShelfMapper();
         List<ElectronicBook>  books = mapper.getEBookBookList();
 
-//        Collections.sort(books, new Comparator<ElectronicBook>() {
-//            public int compare(ElectronicBook book1, ElectronicBook book2) {
-//                return book1.getName();
-//            }
-//        });
         Map<String, Book> bookMap = new HashMap<String, Book>();
         for (Book book : books){
             bookMap.put(book.getName(), book);
