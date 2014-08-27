@@ -2,6 +2,7 @@ package com.thoughtworks.service;
 
 import com.thoughtworks.domain.Book;
 import com.thoughtworks.exception.BookNotFoundException;
+import com.thoughtworks.exception.DataAccessException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +15,7 @@ public interface BookShelfService {
 //      param bookIsbn
 //      return
 //
-    public Book borrowBook(String bookIsbn) throws BookNotFoundException;
+    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException;
 
 //
 //      根据书的名称查询书籍，支持模糊查询，结果按照isbn号排序，优先返回电子书
@@ -35,9 +36,9 @@ public interface BookShelfService {
 //      返回所有电子书的名称和书的Map
 //      return
 //
-    public Map<String,Book> queryAllEBookNames();
+    public Map<String,Book> queryAllEBookNames() throws DataAccessException, SQLException;
 
-    public int bookAmount();
+    public int bookAmount() throws DataAccessException, SQLException;
 
 }
 

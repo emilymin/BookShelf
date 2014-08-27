@@ -3,9 +3,6 @@ package com.thoughtworks.controller;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-/**
- * Created by mpang on 8/26/14.
- */
 public class BookShelfContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent sce) {
@@ -18,5 +15,6 @@ public class BookShelfContextListener implements ServletContextListener {
 
         System.out.println("stop ...");
         //stop something
+
     }
 }

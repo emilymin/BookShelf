@@ -22,7 +22,6 @@ public class BookShelfServlet extends HttpServlet{
         String isbn = request.getParameter("isbn");
         String location = request.getParameter("location");
         String type = request.getParameter("type");
-        System.out.println(name + author);
 
         request.setAttribute("name", name);
         request.setAttribute("author", author);

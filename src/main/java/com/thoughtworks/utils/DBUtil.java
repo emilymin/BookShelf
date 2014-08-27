@@ -9,11 +9,11 @@ import java.util.List;
 
 public class DBUtil{
 
-    private final static String DB_DRIVER = "com.mysql.jdbc.Driver";
+    private static String DB_DRIVER = "com.mysql.jdbc.Driver";
 
-    private final static String DB_URL = "jdbc:mysql://localhost:3306/BOOKS";
-    private final static String DB_NAME = "root";
-    private final static String DB_PWd = "";
+    private static String DB_URL = "jdbc:mysql://localhost:3306/BOOKS?autoReconnect=true";
+    private static String DB_NAME = "root";
+    private static String DB_PWd = "";
 
     static {
         try {

@@ -3,6 +3,7 @@ package com.thoughtworks.service;
 import com.thoughtworks.domain.Book;
 import com.thoughtworks.domain.ElectronicBook;
 import com.thoughtworks.exception.BookNotFoundException;
+import com.thoughtworks.exception.DataAccessException;
 import com.thoughtworks.mapper.BookShelfMapper;
 
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.util.*;
 
 public class BookShelfServiceImpl implements BookShelfService {
 
-    public Book borrowBook(String bookIsbn) throws BookNotFoundException {
+    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException {
         BookShelfMapper mapper = new BookShelfMapper();
         Book book = mapper.borrowBook(bookIsbn);
         if (book.equals(null))
@@ -31,7 +32,7 @@ public class BookShelfServiceImpl implements BookShelfService {
         return true;
     }
 
-    public Map<String, Book> queryAllEBookNames() {
+    public Map<String, Book> queryAllEBookNames() throws DataAccessException, SQLException {
         BookShelfMapper mapper = new BookShelfMapper();
         List<ElectronicBook>  books = mapper.getEBookBookList();
 
@@ -47,7 +48,7 @@ public class BookShelfServiceImpl implements BookShelfService {
         return bookMap;
     }
 
-    public int bookAmount() {
+    public int bookAmount() throws DataAccessException, SQLException {
         BookShelfMapper mapper = new BookShelfMapper();
         List<Book> bookList = mapper.getBookList();
         return bookList.size();

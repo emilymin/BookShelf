@@ -52,6 +52,7 @@ public class BookShelfMapper {
             ((PhysicalBook)book).setStatus(BookStatus.BORROWED);
             DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED), book.getISBN());
         }
+
         return book;
     }
 
