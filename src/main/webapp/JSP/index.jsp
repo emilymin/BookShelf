@@ -2,9 +2,10 @@
 <html>
 	<head>
 		<title>BookShelf</title>
-		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="css/index.css">
 	</head>
 	<body>
+	<img src=""
 		<div class="nav-wrapper">
 			<div class="nav-primary">
 				<div class="nav-logo">BOOKSHELF</div>
