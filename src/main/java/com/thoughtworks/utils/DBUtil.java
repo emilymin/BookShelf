@@ -93,9 +93,7 @@ public class DBUtil{
     }
 
     public static int update(String sql, List<String> parameterList) throws SQLException {
-        System.out.println("enter update");
         String mySql = generateSQL(sql, parameterList);
-        System.out.println(mySql);
         Statement statement = getPreparedStatement(getConnection(),mySql);
         return statement.executeUpdate(mySql);
     }
@@ -115,7 +113,6 @@ public class DBUtil{
     }
 
     public static String generateSQL(String sql, List<String> parameterList){
-        System.out.println("enter generateSQL");
         for (String s : parameterList){
             sql = sql.replaceFirst("\\?", s);
         }

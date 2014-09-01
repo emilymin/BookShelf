@@ -21,9 +21,10 @@ public abstract class Book {
         this.price = price;
         this.authors = authors;
         this.type = type;
+        this.status = BookStatus.BORROWABLE;
     }
 
-    public BookStatus getStatus(BookStatus bookStatus) {
+    public BookStatus getStatus() {
         return status;
     }
 

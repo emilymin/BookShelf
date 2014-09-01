@@ -11,31 +11,27 @@ import java.util.*;
 
 public class BookShelfServiceImpl implements BookShelfService {
 
-    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException {
-        BookShelfMapper mapper = new BookShelfMapper();
-        Book book = mapper.borrowBook(bookIsbn);
-        if (book.equals(null))
-            throw new BookNotFoundException();
-        return book;
-    }
-
-    public List<Book> queryBookByName(String bookName) {
-        return null;
-    }
-
     public boolean addBook(Book book) throws BookNotFoundException, SQLException {
         BookShelfMapper mapper = new BookShelfMapper();
         if (book.getISBN() == null && book.getType() == null){
             return false;
         }
-        System.out.println(book.getISBN());
-        System.out.println(book.getName());
-        System.out.println(book.getAuthors());
-        System.out.println(book.getLocation());
-        System.out.println(book.getType());
-
         mapper.addBook(book);
         return true;
+    }
+
+    public List<Book> queryBookByName(String bookName) throws DataAccessException, SQLException {
+        if (bookName == null) throw new NullPointerException();
+        BookShelfMapper mapper = new BookShelfMapper();
+        return mapper.getBookByName(bookName);
+    }
+
+    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException, DataAccessException {
+        BookShelfMapper mapper = new BookShelfMapper();
+        Book book = mapper.borrowBook(bookIsbn);
+        if (book.equals(null))
+            throw new BookNotFoundException();
+        return book;
     }
 
     public Map<String, Book> queryAllEBookNames() throws DataAccessException, SQLException {

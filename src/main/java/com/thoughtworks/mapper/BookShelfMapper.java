@@ -6,28 +6,33 @@ import com.thoughtworks.domain.ElectronicBook;
 import com.thoughtworks.domain.PhysicalBook;
 import com.thoughtworks.exception.DataAccessException;
 import com.thoughtworks.utils.DBUtil;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class BookShelfMapper {
 
-    private JdbcTemplate jdbcTemplate;
-    static final String QUERYBOOK_SQL = "SELECT * FROM BOOKS WHERE ISBN =";
-    static final String QUERYBOOKS_SQL = "SELECT * FROM BOOKS";
+    static final String QUERYBOOK_SQL = "SELECT * FROM BOOKS WHERE ISBN = \"?\"";
     static final String QUERYEBOOKS_SQL = "SELECT * FROM BOOKS WHERE TYPE = \"?\"";
     static final String INSERTBOOK_SQL = "INSERT INTO BOOKS (ISBN, NAME, AUTHOR, LOCATION, TYPE) VALUES(\"?\", \"?\", \"?\", \"?\", \"?\")";
     static final String UPDATESTATUS_SQL = "UPDATE BOOKS" + "SET STATUS = ? WHERE ISBN = ?";
 
-
     public int addBook(Book book) throws SQLException {
-        System.out.println("enter addBook");
         return DBUtil.update(INSERTBOOK_SQL, Arrays.asList(book.getISBN(), book.getName(), book.getAuthors(), book.getLocation(), book.getType()));
     }
 
-    public Book getBookByISBN(String isbn) {
-        return jdbcTemplate.queryForObject(QUERYBOOK_SQL + isbn, Book.class);
+    public List<ElectronicBook> getEBookBookList() throws DataAccessException, SQLException {
+        String sql = "ELECTRONIC";
+        List<ElectronicBook> bookList = DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadEleRowMapper());
+        return bookList;
+    }
+
+    public List<PhysicalBook> getPhysicalBookBookList() throws DataAccessException, SQLException {
+        String sql = "PHYSICAL";
+        return DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadPhyRowMapper());
     }
 
     public List<Book> getBookList() throws DataAccessException, SQLException {
@@ -37,38 +42,20 @@ public class BookShelfMapper {
         return bookList;
     }
 
-    public List<ElectronicBook> getEBookBookList() throws DataAccessException, SQLException {
-        String sql = "ELECTRONIC";
-        return DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadEleRowMapper());
-    }
-
-    public List<PhysicalBook> getPhysicalBookBookList() throws DataAccessException, SQLException {
-        String sql = "PHYSICAL";
-        return DBUtil.query(QUERYEBOOKS_SQL, Arrays.asList(sql),new LoadPhyRowMapper());
-    }
-
-    public Book borrowBook(String isbn) throws SQLException {
-        Book book = getBookByISBN(isbn);
-        if (book.equals(PhysicalBook.class)){
-            ((PhysicalBook)book).setStatus(BookStatus.BORROWED);
-            DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED.toString(), book.getISBN()));
-        }
-
-        return book;
-    }
-
     public List<Book> getBookByName(String name) throws DataAccessException, SQLException {
         List<Book> validBooks = new ArrayList<Book>();
         List<ElectronicBook> electronicBooks = new ArrayList<ElectronicBook>();
         List<PhysicalBook> physicalBooks = new ArrayList<PhysicalBook>();
         List<Book> bookList = getBookList();
+        String electronic = "ELECTRONIC";
+        String physical = "PHYSICAL";
 
         for (Book book : bookList) {
             if (book.getName().contains(name)) {
-                if (book.getType() == "ELECTRONIC") {
-                    electronicBooks.add((ElectronicBook) book);
-                } else {
+                if (book.getType().equals(physical)) {
                     physicalBooks.add((PhysicalBook) book);
+                } else if (book.getType().equals(electronic)){
+                    electronicBooks.add((ElectronicBook) book);
                 }
             }
         }
@@ -79,4 +66,26 @@ public class BookShelfMapper {
         return validBooks;
     }
 
+    public Book getBookByISBN(String isbn) throws DataAccessException, SQLException {
+        if (isbn == null) throw new NullPointerException();
+        List<ElectronicBook> eBookList = null;
+        List<PhysicalBook> physicalBookList = null;
+        List<Book> bookList = new ArrayList<Book>();
+        eBookList = DBUtil.query(QUERYBOOK_SQL, Arrays.asList(isbn), new LoadEleRowMapper());
+        physicalBookList = DBUtil.query(QUERYBOOK_SQL, Arrays.asList(isbn), new LoadPhyRowMapper());
+
+        bookList.addAll(eBookList);
+        bookList.addAll(physicalBookList);
+
+        return bookList.get(0);
+    }
+
+    public Book borrowBook(String isbn) throws SQLException, DataAccessException {
+        Book book = getBookByISBN(isbn);
+        if (book.equals(PhysicalBook.class)){
+            ((PhysicalBook)book).setStatus(BookStatus.BORROWED);
+            DBUtil.update(UPDATESTATUS_SQL, Arrays.asList(BookStatus.BORROWED.toString(), book.getISBN()));
+        }
+        return book;
+    }
 }

@@ -15,7 +15,7 @@ public interface BookShelfService {
 //      param bookIsbn
 //      return
 //
-    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException;
+    public Book borrowBook(String bookIsbn) throws BookNotFoundException, SQLException, DataAccessException;
 
 //
 //      根据书的名称查询书籍，支持模糊查询，结果按照isbn号排序，优先返回电子书
@@ -23,7 +23,7 @@ public interface BookShelfService {
 //      param bookName
 //      return
 //
-    public List<Book> queryBookByName(String bookName);
+    public List<Book> queryBookByName(String bookName) throws DataAccessException, SQLException;
 
 //
 //      往书架上增加一本书

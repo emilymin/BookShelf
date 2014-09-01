@@ -8,15 +8,22 @@
 		<div class="nav-wrapper">
 			<div class="nav-primary">
 				<div class="nav-logo">BOOKSHELF</div>
+				<form action="ShowBook" method="post">
+                                <input type="submit" value="show books"/>
+                            </form>
 				<div class="nav-search">
-					<form>
+					<form action="QueryBook" method="post">
 						<div class="inp">
-							<input id="inp-query" size="22" placeholder="书名">
+							<input id="inp-query" size="22" type="text" placeholder="书名" name="bookName">
 						</div>
 						<div class="inp-btn">
 							<input id="inp-sub" type="submit" value="search">
 						</div>
 					</form>
+					<form action="BorrowBook" method="post">
+                                    <input type="text" name="borrowISBN" />
+                                    <input type="submit" value="borrow" />
+                                </form>
 				</div>
 			</div>
 		</div>
@@ -28,7 +35,10 @@
 						<div class="book-attribute" style="margin-top:15px">
 							<div class="inp-name">TYPE</div>
 							<div class="inp-content">
-								<input  class="book-input" type="text" name="type">
+								<select class="book-input" name="type">
+                                    <option value ="ELECTRONIC">ELECTRONIC</option>
+                                    <option value ="PHYSICAL">PHYSICAL</option>
+                                </select>
 							</div>
 						</div>
 						<div class="book-attribute">
@@ -61,6 +71,7 @@
 					</form>
 				</div>
 			</div>
+
 		</div>
 		<div id="content"> 
 			<div class="book-express"> 

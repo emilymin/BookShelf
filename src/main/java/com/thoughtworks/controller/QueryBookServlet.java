@@ -10,28 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ShowBookServlet extends HttpServlet {
+public class QueryBookServlet extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Book> bookMap = new HashMap<String, Book>();
+        String name = request.getParameter("bookName");
 
         BookShelfServiceImpl bookShelfService = new BookShelfServiceImpl();
+        List<Book> bookList = new ArrayList<Book>();
         try {
-            bookMap = bookShelfService.queryAllEBookNames();
+            bookList = bookShelfService.queryBookByName(name);
         } catch (DataAccessException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("name", bookMap.get("book5").getName());
-        request.setAttribute("author", bookMap.get("book5").getAuthors());
-        request.setAttribute("isbn", bookMap.get("book5").getISBN());
-        request.setAttribute("location", bookMap.get("book5").getLocation());
-        request.setAttribute("type", bookMap.get("book5").getType());
+        request.setAttribute("bookList", bookList.get(0).getName());
 
-        request.getRequestDispatcher("./JSP/Book.jsp").forward(request, response);
+        request.getRequestDispatcher("./JSP/bookQueryList.jsp").forward(request, response);
     }
 }

@@ -21,7 +21,7 @@
 
     <servlet>
         <servlet-name>BookShelf</servlet-name>
-        <servlet-class>com.thoughtworks.controller.BookShelfServlet</servlet-class>
+        <servlet-class>com.thoughtworks.controller.AddBookServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -39,4 +39,23 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--<servlet>-->
+        <!--<servlet-name>QueryBook</servlet-name>-->
+        <!--<servlet-class>com.thoughtworks.controller.QueryBookServlet</servlet-class>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>QueryBook</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--<servlet>-->
+        <!--<servlet-name>BorrowBook</servlet-name>-->
+        <!--<servlet-class>com.thoughtworks.controller.BorrowBookServlet</servlet-class>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>BorrowBook</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
 </web-app>

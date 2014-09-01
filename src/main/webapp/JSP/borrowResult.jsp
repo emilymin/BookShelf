@@ -1,0 +1,2 @@
+${book}
+${bookStatus}

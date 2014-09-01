@@ -27,7 +27,5 @@ public class DBUtilTest {
     public void should_return_query_result() throws Exception {
         List<PhysicalBook> bookList = DBUtil.query("SELECT * FROM BOOKS WHERE TYPE = \"ELECTRONIC\"", Arrays.asList(""), new LoadPhyRowMapper());
         PhysicalBook book = bookList.get(0);
-        System.out.println(bookList.get(0).getType());
     }
-
 }
